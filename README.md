@@ -17,6 +17,7 @@ Dependencies:
 * glib-2.0
 * gee-0.8
 * gtk+-3.0
+* gstreamer-audio-1.0
  
 then build with:
  
