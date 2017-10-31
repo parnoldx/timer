@@ -9,8 +9,10 @@
     <description>
         <p>The ultimate tea timer you searched for that use natural language to define the time and provide has various color options</p>
         <ul>
-            <li>Pass the time as console arguments. See --help</li>
-            <li>Optionally assign a name to the timer</li>
+            <li>Start a timer with natural language input like e.g. 5 minutes 15 seconds or 5m3s or just 5 for 5 minutes</li>
+            <li>You can assign a title to your timer by double clicking</li>
+            <li>Various color options to choose from</li>
+            <li>Command line options available, see --help for more information</li>
         </ul>
     </description>
     <provides>
