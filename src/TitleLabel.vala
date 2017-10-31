@@ -16,7 +16,7 @@
  * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
  */
- 
+
 namespace Timer {
 public class TitleLabel : Gtk.Entry {
 	string last_title = "Timer";
@@ -53,6 +53,14 @@ public class TitleLabel : Gtk.Entry {
                 last_title = text;
             }
             text = last_title;
+        });
+        can_focus = false;
+        button_press_event.connect ((e) => {
+            if (e.type == Gdk.EventType.@2BUTTON_PRESS) {
+                can_focus = true;
+                focus (Gtk.DirectionType.UP);
+                return false;
+            }
         });
 	}
 

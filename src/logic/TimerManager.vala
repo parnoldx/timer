@@ -19,25 +19,29 @@
 
 namespace Timer {
 public class TimerManager : GLib.Object {
-	TimerObject? actual_timer = null;
+    public TimerObject? actual_timer { get; private set; }
+    public bool stop_notify { get; set; }
 
-	public signal void new_timer_set (TimerObject timer);
-	public signal void tick (TimerObject timer);
-	public signal void timer_finished (TimerObject timer);
+    public signal void new_timer_set (TimerObject timer);
+    public signal void tick (TimerObject timer);
+    public signal void timer_finished (TimerObject timer);
 
-	public void new_timer (Timer.TimeSpan timespan) {
-        print (timespan.to_string ()+" new_timer timer set\n");
+    public bool is_timer_set () {
+        return actual_timer != null;
+    }
+
+    public void new_timer (Timer.TimeSpan timespan) {
         if (actual_timer != null) {
-        	actual_timer.stop ();
+            actual_timer.stop ();
         }
         actual_timer = new TimerObject (timespan);
         actual_timer.tick.connect ((t) => {
-        	tick (t);
+            tick (t);
         });
         actual_timer.match.connect ((t) => {
-        	timer_finished (t);
+            timer_finished (t);
         });
         new_timer_set (actual_timer);
-	}
+    }
 }
 }

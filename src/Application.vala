@@ -27,9 +27,7 @@ namespace Timer {
         }
 
         public override void activate () {
-            print ("%d",(int)get_windows ().length ());
-            var window = new MainWindow (this);
-
+            var window = new MainWindow (this, (int)get_windows ().length ());
             var quit_action = new SimpleAction ("quit", null);
 
             add_action (quit_action);

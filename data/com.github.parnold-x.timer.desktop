@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Name=Timer
+Comment=The ultimate tea timer
+GenericName=Timer
+TryExec=com.github.parnold-x.timer
+Exec=com.github.parnold-x.timer
+Icon=com.github.parnold-x.timer
+Terminal=false
+Categories=GTK;Utility;
+Keywords=Timer;TeaTimer;Countdown;Alarm;

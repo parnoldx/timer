@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist>
+  <schema path="/com/github/parnold-x/timer/"
+  id="com.github.parnold-x.timer"
+  gettext-domain="com.github.parnold-x.timer">
+    <key name="window-x" type="i">
+      <default>-1</default>
+      <summary>Most recent x position of Timer</summary>
+      <description>Most recent x position of Timer</description>
+    </key>
+    <key name="window-y" type="i">
+      <default>-1</default>
+      <summary>Most recent y position of Timer</summary>
+      <description>Most recent y position of Timer</description>
+    </key>
+    <key name="color" type="s">
+      <default>"Lime"</default>
+      <summary>Timer theme color</summary>
+      <description>Most recent choosen timer theme color</description>
+    </key>
+    <key name="sound-beep" type="b">
+      <default>true</default>
+      <summary>Beep sound</summary>
+      <description>Play a beep sound when the timer finishes</description>
+    </key>
+    <key name="flash-beep" type="b">
+      <default>true</default>
+      <summary>Beep flash</summary>
+      <description>Flash 3 times red when the timer finishes</description>
+    </key>
+    <key name="always-on-top" type="b">
+      <default>false</default>
+      <summary>Keep window on top</summary>
+      <description>If activated the timer window stays on top of all windows</description>
+    </key>
+  </schema>
+</schemalist>
+

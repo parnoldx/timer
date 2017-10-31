@@ -18,6 +18,7 @@ Dependencies:
 * gee-0.8
 * gtk+-3.0
 * gstreamer-audio-1.0
+* unity
  
 then build with:
  

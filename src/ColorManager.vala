@@ -70,7 +70,7 @@ namespace Timer {
 				case ORANGE:
 					return "#ffa154";
 				case BANANA:
-					return "#ffe16b";
+					return "#f9c440";
 				case LIME:
 					return "#9bdb4d";
 				case BLUEBERRY:
@@ -95,7 +95,7 @@ namespace Timer {
 				case ORANGE:
 					return "#ffc27d";
 				case BANANA:
-					return "#fff394";
+					return "#ffe16b";
 				case LIME:
 					return "#d1ff82";
 				case BLUEBERRY:
@@ -127,39 +127,99 @@ namespace Timer {
 	}
 public class ColorManager : GLib.Object {
 		public const string STARTUP_CSS = """
-		@define-color colorPrimary %s;
-		@define-color colorAccent %s;
-		@define-color bg_highlight_color shade (@colorPrimary, 1.4);
+		@define-color colorPrimary%d %s;
+		@define-color colorAccent%d %s;
+		@define-color textColorPrimary #1a1a1a;
 
-		.titlebar,
-		.background {
-		    border: none;
-		    background-image: none;
-		    background-color: @colorPrimary;
-		    padding: 1px 3px;
-		    box-shadow:
-		        inset 1px 0 0 0 alpha (@colorPrimary, 0.2),
-		        inset -1px 0 0 0 alpha (@colorPrimary, 0.2),
-		        inset 0 1px 0 0 @colorPrimary;
+		.w-%d {
+		    background-color: @colorPrimary%d;
 		}
-		.entry {
+		.w-%d GtkHeaderBar {
+		    background-color: @colorPrimary%d;
+		    padding: 1px 3px;
+			box-shadow: none;
+		}
+		.entry-%d {
 		    font-size: 18px;
 		}
+
+.entry-%d:focus {
+    border-color: alpha (@colorAccent%d, 0.8);
+    box-shadow:
+        inset 0 0 0 1px alpha (@colorAccent%d, 0.23),
+        0 1px 0 0 alpha (@bg_highlight_color, 0.3);
+    transition: all 200ms ease-in;
+}
+entry-%d progress,
+entry-%d progress:focus,
+.entry-%d.progressbar,
+.entry-%d.progressbar:focus {
+    background-image:
+        linear-gradient(
+            to bottom,
+            mix(
+                @colorAccent%d,
+                @base_color,
+                0.4
+            ),
+            mix(
+                @colorAccent%d,
+                @base_color,
+                0.5
+            )
+        );
+    border: 1px solid @colorAccent%d;
+    border-right: 0;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    box-shadow:
+        inset 0 1px 0 0 alpha (@inset_dark_color, 0.7),
+        inset 0 0 0 1px alpha (@inset_dark_color, 0.3);
+}
+*:selected {
+    background-color: shade (@colorAccent%d, 0.8);
+    color: @text_color;
+}
+
+*:selected:focus {
+    background-color: alpha (@colorAccent%d, 0.9);
+    color: @text_color;
+    text-shadow: none;
+}
 		""";
 
 		private const string CHANGE_COLOR = """
-		@define-color colorPrimary %s;
-		@define-color colorAccent %s;
-        .background,
-        .titlebar {
+		@define-color colorPrimary%d %s;
+		@define-color colorAccent%d %s;
+
+        .w-%d,
+		.w-%d GtkHeaderBar {
             transition: all 600ms ease-in-out;
         }
     	""";
 
+    	public static int font_size = 18;
+    	private const string FONT_CHANGE = """
+    	.entry-%d {
+		    font-size: %dpx;
+		}
+    	""";
+
 		public static void startup (Timer.Color color, int uid) {
+			if (uid > 0) {
+				var colorarray = Color.all ();
+				for (int i = 0; i < colorarray.length; i++) {
+					if (colorarray[i] == color) {
+						color = colorarray[(i+uid)%colorarray.length];
+						break;
+					}
+				}
+			}
 			try {
             	var provider = new Gtk.CssProvider ();
-            	provider.load_from_data (ColorManager.STARTUP_CSS.printf (color.get_primary_color (), color.get_secondary_color ()));
+            	provider.load_from_data (ColorManager.STARTUP_CSS.printf (uid, color.get_primary_color (),
+            		uid, color.get_secondary_color (), uid, uid, uid, uid, uid, uid, uid, uid, uid, uid,
+            		uid, uid, uid, uid, uid, uid, uid));
             	Gtk.StyleContext.add_provider_for_screen (Gdk.Screen.get_default (), provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
              } catch (GLib.Error e) {
             	GLib.error ("Failed to load css: %s", e.message);
@@ -169,50 +229,80 @@ public class ColorManager : GLib.Object {
 		public static void change_color (Timer.Color color, int uid) {
 			try {
             	var provider = new Gtk.CssProvider ();
-            	provider.load_from_data (ColorManager.CHANGE_COLOR.printf (color.get_primary_color (), color.get_secondary_color ()));
+            	provider.load_from_data (ColorManager.CHANGE_COLOR.printf (uid, color.get_primary_color (), uid, color.get_secondary_color (), uid, uid));
             	Gtk.StyleContext.add_provider_for_screen (Gdk.Screen.get_default (), provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
             } catch (GLib.Error e) {
             	GLib.error ("Failed to load css: %s", e.message);
         	}
 		}
 
-		public static void beep () {
-			highlight_red ();
-			unhighlight_red ();
+		public static void change_font (int size, int uid) {
+			font_size = size;
+			try {
+            	var provider = new Gtk.CssProvider ();
+            	provider.load_from_data (ColorManager.FONT_CHANGE.printf (uid, font_size));
+            	Gtk.StyleContext.add_provider_for_screen (Gdk.Screen.get_default (), provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
+            } catch (GLib.Error e) {
+            	GLib.error ("Failed to load css: %s", e.message);
+        	}
+		}
+
+		public static void beep (Settings setting, int uid) {
+			if (setting.get_boolean ("sound-beep"))
+				play_beep_sound ();
+			if (!setting.get_boolean ("flash-beep"))
+				return;
+			// flash red to the sound
+			highlight_red (uid);
+			unhighlight_red (uid);
 			Timeout.add (210, ()=> {
-				highlight_red ();
-				unhighlight_red ();
+				highlight_red (uid);
+				unhighlight_red (uid);
 				return false;
 			});
 			Timeout.add (410, ()=> {
-				highlight_red ();
-				unhighlight_red ();
+				highlight_red (uid);
+				unhighlight_red (uid);
 				return false;
 			});
-
 		}
 
-		private static void highlight_red () {
+		private static void play_beep_sound () {
+            dynamic Gst.Element playbin = Gst.ElementFactory.make ("playbin", "play");
+            var temp_file = File.new_for_path (Environment.get_tmp_dir ()+"/parnold-x.teatimer.beep.wav");
+            if (!temp_file.query_exists ()) {
+                var file = File.new_for_uri ("resource:///com/github/parnold-x/teatimer/beep.wav");
+                try {
+                file.copy (temp_file, 0);
+                } catch (GLib.Error e) {
+                    GLib.warning ("Failed to extract beep: %s", e.message);
+                }
+            }
+            playbin.uri = temp_file.get_uri ();
+            playbin.set_state (Gst.State.PLAYING);
+        }
+
+		private static void highlight_red (int uid) {
 			try {
             	var provider = new Gtk.CssProvider ();
             	provider.load_from_data ("""
-				.background {
+				.w-%d {
 					background-color:red;
-        		}""");
+        		}""".printf (uid));
             	Gtk.StyleContext.add_provider_for_screen (Gdk.Screen.get_default (), provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
             } catch (GLib.Error e) {
             	GLib.error ("Failed to load css: %s", e.message);
         	}
 		}
 
-		private static void  unhighlight_red () {
+		private static void  unhighlight_red (int uid) {
 			Timeout.add (90, ()=> {
 				try {
             		var provider = new Gtk.CssProvider ();
             		provider.load_from_data ("""
-					.background {
-						background-color:@colorPrimary;
-        			}""");
+					.w-%d {
+						background-color:@colorPrimary%d;
+        			}""".printf (uid, uid));
             		Gtk.StyleContext.add_provider_for_screen (Gdk.Screen.get_default (), provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
             	} catch (GLib.Error e) {
             		GLib.error ("Failed to load css: %s", e.message);
@@ -231,8 +321,6 @@ public class ColorManager : GLib.Object {
 		}
 
 		public const string icon_svg_data = """<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- Created with Inkscape (http://www.inkscape.org/) -->
-
 <svg
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"

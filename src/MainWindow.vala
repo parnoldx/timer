@@ -20,24 +20,26 @@
 namespace Timer {
 
     public class MainWindow : Gtk.Window {
-    	// private TimerSettings settings;
+    	private Settings settings;
+        public int uid { get; construct set; }
 
-		public MainWindow (Gtk.Application application) {
+		public MainWindow (Gtk.Application application, int window_id) {
 			Object (application: application,
                 icon_name: "com.github.parnold-x.timer",
                 title: _("Timer"),
                 resizable: false,
                 height_request: 280,
-                width_request: 520);
+                width_request: 520,
+                uid: window_id);
         }
 
         construct {
-            var window_index = (int) application.get_windows ().length ();
-            ColorManager.startup (Color.GRAPE,window_index);
-            get_style_context ().add_class ("mainwindow-%d".printf(window_index));
+            settings = new Settings ("com.github.parnold-x.timer");
+            ColorManager.startup (Color.get (settings.get_string ("color")), uid);
+            get_style_context ().add_class ("w-%d".printf(uid));
 
             var header_bar = new Gtk.HeaderBar ();
-            header_bar.get_style_context ().add_class ("background");
+            header_bar.get_style_context ().add_class (Gtk.STYLE_CLASS_FLAT);
             header_bar.show_close_button = true;
             var settings_button = create_settings_menu ();
             header_bar.pack_end (settings_button);
@@ -50,7 +52,7 @@ namespace Timer {
             this.delete_event.connect (on_window_closing);
 
             var timer_manager = new TimerManager ();
-            var time_entry = new TimerEntry (timer_manager);
+            var time_entry = new TimerEntry (timer_manager, uid);
 
             var box = new Gtk.Box(Gtk.Orientation.VERTICAL, 0);
             box.can_focus = true;
@@ -63,25 +65,42 @@ namespace Timer {
             add (box);
             show_all ();
             time_entry.focus (Gtk.DirectionType.UP);
+            set_keep_above (settings.get_boolean ("always-on-top"));
 
             title.unfocus.connect (() => {
                 time_entry.focus (Gtk.DirectionType.UP);
             });
 
+            var launcher = Unity.LauncherEntry.get_for_desktop_id ("com.github.parnold-x.timer.desktop");
+
             timer_manager.new_timer_set.connect ((t) => {
                 focus (Gtk.DirectionType.UP);
+                if (title.text.has_suffix (" finished")) {
+                    title.text = title.text.replace (" finished", "");
+                }
                 t.start ();
+                if (uid == 0)
+                    launcher.progress_visible = true;
             });
             timer_manager.tick.connect ((t) => {
                 time_entry.set_progress_fraction (t.time_elapsed_percentage);
-                time_entry.text = t.time_left.to_string ();
+                if (uid == 0)
+                    launcher.progress = t.time_elapsed_percentage;
+                if (!timer_manager.stop_notify)
+                    time_entry.text = t.time_left.to_string ();
             });
             timer_manager.timer_finished.connect ((t) => {
                 time_entry.set_progress_fraction (t.time_elapsed_percentage);
-                time_entry.text = "Timer finished";
-                title.text = title.text +" finished";
-                play_beep ();
-                ColorManager.beep ();
+                if (!timer_manager.stop_notify)
+                    time_entry.text = "Timer finished";
+                if (!title.text.has_suffix (" finished")) {
+                    title.text = title.text +" finished";
+                }
+                set_keep_above (true);
+                ColorManager.beep (settings, uid);
+                set_keep_above (settings.get_boolean ("always-on-top"));
+                if (uid == 0)
+                    launcher.progress_visible = false;
             });
 
         }
@@ -98,7 +117,8 @@ namespace Timer {
 
                 var menu_item = new Gtk.MenuItem();
                 menu_item.activate.connect(() => {
-                    ColorManager.change_color (c, 0);
+                    ColorManager.change_color (c, uid);
+                    settings.set_string ("color", c.get_label ());
                 });
                 menu_item.add(box);
                 menu_item.name = c.get_label ();
@@ -116,21 +136,6 @@ namespace Timer {
 
         private bool on_window_closing () {
             return false;
-        }
-
-        private void play_beep () {
-            dynamic Gst.Element playbin = Gst.ElementFactory.make ("playbin", "play");
-            var temp_file = File.new_for_path (Environment.get_tmp_dir ()+"/parnold-x.teatimer.beep.wav");
-            if (!temp_file.query_exists ()) {
-                var file = File.new_for_uri ("resource:///com/github/parnold-x/teatimer/beep.wav");
-                try {
-                file.copy (temp_file, 0);
-                } catch (GLib.Error e) {
-                    GLib.warning ("Failed to extract beep: %s", e.message);
-                }
-            }
-            playbin.uri = temp_file.get_uri ();
-            playbin.set_state (Gst.State.PLAYING);
         }
 }
 }

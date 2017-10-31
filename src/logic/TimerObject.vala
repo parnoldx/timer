@@ -19,6 +19,7 @@
 
 namespace Timer {
 public class TimerObject : GLib.Object {
+    public TimeSpan timer_start_span { get; private set; }
   	public DateTime timer_start { get; private set; }
     public DateTime timer_end { get; private set; }
     public Timer.TimeSpan time_left { get; private set; }
@@ -33,6 +34,7 @@ public class TimerObject : GLib.Object {
     public signal void match (TimerObject timer);
 
     public TimerObject (Timer.TimeSpan time_span) {
+        timer_start_span = time_span;
         timer_end = time_span.get_end_time (new DateTime.now_local ());
     }
 
@@ -49,6 +51,7 @@ public class TimerObject : GLib.Object {
     public void stop () {
         if (tick_timer != 0) {
             Source.remove (tick_timer);
+            tick_timer = 0;
         }
     }
 

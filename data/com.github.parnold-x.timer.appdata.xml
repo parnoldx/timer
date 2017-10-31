@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2017 Peter Arnold <parnold1@gmail.com> -->
+<component type="desktop-application">
+    <id>com.github.parnold-x.timer.desktop</id>
+    <metadata_license>CC0-1.0</metadata_license>
+    <project_license>GPL-3.0+</project_license>
+    <name>Timer</name>
+    <summary>The ultimate tea timer</summary>
+    <description>
+        <p>The ultimate tea timer you searched for that use natural language to define the time and provide has various color options</p>
+        <ul>
+            <li>Pass the time as console arguments. See --help</li>
+            <li>Optionally assign a name to the timer</li>
+        </ul>
+    </description>
+    <provides>
+        <binary>com.github.parnold-x.timer</binary>
+    </provides>
+    <screenshots>
+        <screenshot type="default">
+            <image>https://raw.githubusercontent.com/parnold-x/timer/master/data/screenshot.png</image>
+        </screenshot>
+    </screenshots>
+    <developer_name>Peter Arnold</developer_name>
+    <url type="homepage">https://github.com/parnold-x/timer</url>
+    <url type="bugtracker">https://github.com/parnold-x/timer/issues</url>
+    <custom>
+        <value key="x-appcenter-color-primary">rgb(230, 199, 168)</value>
+        <value key="x-appcenter-color-primary-text">rgb(0, 0, 0)</value>
+    </custom>
+</component>

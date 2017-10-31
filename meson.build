@@ -51,11 +51,14 @@ executable(
         dependency('gobject-2.0'),
         dependency('gtk+-3.0'),
         dependency('gstreamer-audio-1.0'),
+        dependency('unity'),
         # math dependency so glib math shit works
         cc.find_library('m', required: false)
     ],
     install : true
 )
 
-# subdir('data')
+meson.add_install_script('meson/post_install.py')
+
+subdir('data')
 #subdir('po')
