@@ -7,7 +7,7 @@
     <name>Timer</name>
     <summary>The ultimate tea timer</summary>
     <description>
-        <p>The ultimate tea timer you searched for that use natural language to define the time and provide has various color options</p>
+        <p>The ultimate tea timer you searched for.</p>
         <ul>
             <li>Start a timer with natural language input like e.g. 5 minutes 15 seconds or 5m3s or just 5 for 5 minutes</li>
             <li>You can assign a title to your timer by double clicking</li>
