@@ -176,12 +176,12 @@ entry-%d progress:focus,
         inset 0 1px 0 0 alpha (@inset_dark_color, 0.7),
         inset 0 0 0 1px alpha (@inset_dark_color, 0.3);
 }
-*:selected {
+.entry-%d:selected {
     background-color: shade (@colorAccent%d, 0.8);
     color: @text_color;
 }
 
-*:selected:focus {
+.entry-%d:selected:focus {
     background-color: alpha (@colorAccent%d, 0.9);
     color: @text_color;
     text-shadow: none;
@@ -219,7 +219,7 @@ entry-%d progress:focus,
             	var provider = new Gtk.CssProvider ();
             	provider.load_from_data (ColorManager.STARTUP_CSS.printf (uid, color.get_primary_color (),
             		uid, color.get_secondary_color (), uid, uid, uid, uid, uid, uid, uid, uid, uid, uid,
-            		uid, uid, uid, uid, uid, uid, uid));
+            		uid, uid, uid, uid, uid, uid, uid, uid, uid));
             	Gtk.StyleContext.add_provider_for_screen (Gdk.Screen.get_default (), provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
              } catch (GLib.Error e) {
             	GLib.error ("Failed to load css: %s", e.message);

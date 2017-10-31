@@ -48,7 +48,7 @@ namespace Timer {
             string timer = "";
             string*[] _args = new string[args.length];
             for (int i = 0; i < args.length; i++) {
-                if (!args[i].has_prefix ("-")){
+                if (i > 0 && !args[i].has_prefix ("-")){
                     timer += args[i] + " ";
                 } else if (args[i] == "--help" || args[i] == "-help" || args[i] == "-h") {
                     help ();
@@ -66,6 +66,7 @@ namespace Timer {
                 help ();
                 return 0;
             }
+            print ("\n"+timer+"\n");
             new MainWindow (this, (int) get_windows ().length (), title, timer);
             title = null;
             return 0;
