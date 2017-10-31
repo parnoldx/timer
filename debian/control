@@ -1,0 +1,17 @@
+Source: com.github.parnold-x.timer
+Section: utility
+Priority: optional
+Maintainer: Peter Arnold <parnold1@gmail.com>
+Build-Depends: meson,
+               debhelper (>= 9),
+               libgtk-3-dev,
+               valac (>= 0.16),
+               gstreamer-audio-1.0,
+               unity
+
+Standards-Version: 3.9.3
+
+Package: com.github.parnold-x.timer
+Architecture: any
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Description: The ultimate tea timer
