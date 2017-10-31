@@ -35,6 +35,7 @@ c_args = [
 executable(
     'com.github.parnold-x.timer',
     'src/Application.vala',
+    'src/ColorChooser.vala',
     'src/ColorManager.vala',
     'src/MainWindow.vala',
     'src/TimerEntry.vala',

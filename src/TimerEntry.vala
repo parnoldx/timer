@@ -137,6 +137,18 @@ public class TimerEntry : Gtk.Entry {
         }
     }
 
+    public bool validate_timer (string timer_str) {
+        try {
+            GLib.MatchInfo mi;
+            if (minute_only_pattern.match (timer_str, 0, out mi)) {
+               return true;
+            }
+            return long_form_pattern.match (timer_str, 0, out mi);
+        } catch (GLib.Error e) {
+            GLib.warning ("Regex parse error: %s", e.message);
+        }
+    }
+
 }
 
 }

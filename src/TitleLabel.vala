@@ -19,11 +19,13 @@
 
 namespace Timer {
 public class TitleLabel : Gtk.Entry {
-	string last_title = "Timer";
+	string last_title;
 
 	public signal void unfocus ();
-	public TitleLabel() {
-		Object (text: "Timer", xalign: 0.5f);
+	public TitleLabel (string? timer_name) {
+		Object (text: timer_name != null ? timer_name : TimerApp.STANDARD_TIMER_NAME,
+            xalign: 0.5f);
+        last_title = text;
 	}
 
 	construct {
@@ -33,7 +35,7 @@ public class TitleLabel : Gtk.Entry {
         title_context.add_class ("title");
         activate.connect (() => {
             if (text.length == 0) {
-                last_title = "Timer";
+                last_title = TimerApp.STANDARD_TIMER_NAME;
             } else {
                 last_title = text;
             }

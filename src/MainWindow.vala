@@ -20,17 +20,22 @@
 namespace Timer {
 
     public class MainWindow : Gtk.Window {
+        private const string FINISHED_SUFFIX = " finished";
     	private Settings settings;
         public int uid { get; construct set; }
+        public string? timer_name { get; construct set; }
+        public string timer { get; construct set; }
 
-		public MainWindow (Gtk.Application application, int window_id) {
+		public MainWindow (Gtk.Application application, int window_id, string? name, string? t_set) {
 			Object (application: application,
                 icon_name: "com.github.parnold-x.timer",
                 title: _("Timer"),
                 resizable: false,
                 height_request: 280,
                 width_request: 520,
-                uid: window_id);
+                uid: window_id,
+                timer_name: name,
+                timer: t_set);
         }
 
         construct {
@@ -38,13 +43,20 @@ namespace Timer {
             ColorManager.startup (Color.get (settings.get_string ("color")), uid);
             get_style_context ().add_class ("w-%d".printf(uid));
 
+            var window_x = settings.get_int ("window-x");
+            var window_y = settings.get_int ("window-y");
+
+            if (window_x != -1 ||  window_y != -1) {
+                move (window_x + 25*uid, window_y+25*uid);
+            }
+
             var header_bar = new Gtk.HeaderBar ();
             header_bar.get_style_context ().add_class (Gtk.STYLE_CLASS_FLAT);
             header_bar.show_close_button = true;
             var settings_button = create_settings_menu ();
             header_bar.pack_end (settings_button);
 
-            var title = new TitleLabel ();
+            var title = new TitleLabel (timer_name);
 
             header_bar.set_custom_title (title);
             set_titlebar (header_bar);
@@ -65,7 +77,7 @@ namespace Timer {
             add (box);
             show_all ();
             time_entry.focus (Gtk.DirectionType.UP);
-            set_keep_above (settings.get_boolean ("always-on-top"));
+            // set_keep_above (settings.get_boolean ("always-on-top"));
 
             title.unfocus.connect (() => {
                 time_entry.focus (Gtk.DirectionType.UP);
@@ -75,8 +87,8 @@ namespace Timer {
 
             timer_manager.new_timer_set.connect ((t) => {
                 focus (Gtk.DirectionType.UP);
-                if (title.text.has_suffix (" finished")) {
-                    title.text = title.text.replace (" finished", "");
+                if (title.text.has_suffix (FINISHED_SUFFIX)) {
+                    title.text = title.text.replace (FINISHED_SUFFIX, "");
                 }
                 t.start ();
                 if (uid == 0)
@@ -91,11 +103,11 @@ namespace Timer {
             });
             timer_manager.timer_finished.connect ((t) => {
                 time_entry.set_progress_fraction (t.time_elapsed_percentage);
-                if (!timer_manager.stop_notify)
-                    time_entry.text = "Timer finished";
-                if (!title.text.has_suffix (" finished")) {
-                    title.text = title.text +" finished";
+                if (!title.text.has_suffix (FINISHED_SUFFIX)) {
+                    title.text = title.text + FINISHED_SUFFIX;
                 }
+                if (!timer_manager.stop_notify)
+                    time_entry.text = title.text;
                 set_keep_above (true);
                 ColorManager.beep (settings, uid);
                 set_keep_above (settings.get_boolean ("always-on-top"));
@@ -103,28 +115,44 @@ namespace Timer {
                     launcher.progress_visible = false;
             });
 
+            if (time_entry.validate_timer (timer)) {
+                time_entry.text = timer;
+                time_entry.activate ();
+            }
         }
 
         private Gtk.MenuButton create_settings_menu () {
             Gtk.Menu settings_menu = new Gtk.Menu();
-            foreach (Color c in Color.all ()) {
-                var label = new Gtk.Label(c.get_label ());
+            var new_timer = new Gtk.MenuItem.with_label (_("New Timer"));
+            new_timer.activate.connect (() => {
+                new MainWindow (get_application (), (int) get_application ().get_windows ().length (), null, "");
+            });
+            settings_menu.add(new_timer);
+            var color_item = new ColorChooser ();
+            color_item.color_changed.connect ((c) => {
+                ColorManager.change_color (c, uid);
+                settings.set_string ("color", c.get_label ());
+            });
+            settings_menu.add(color_item);
+            settings_menu.add (new Gtk.SeparatorMenuItem ());
+            var always_on_top = new Gtk.CheckMenuItem.with_label (_("Always on top"));
+            always_on_top.active = settings.get_boolean ("always-on-top");
+            always_on_top.toggled.connect (() => {
+                var state = settings.get_boolean ("always-on-top");
+                set_keep_above (!state);
+                settings.set_boolean ("always-on-top",!state);
+                always_on_top.active = !state;
+            });
+            settings_menu.add (always_on_top);
 
-                var box = new Gtk.Box(Gtk.Orientation.HORIZONTAL, 6);
-                var color_image = new Gtk.Image.from_pixbuf (ColorManager.get_icon (c));
-                box.add (color_image);
-                box.add(label);
-
-                var menu_item = new Gtk.MenuItem();
-                menu_item.activate.connect(() => {
-                    ColorManager.change_color (c, uid);
-                    settings.set_string ("color", c.get_label ());
-                });
-                menu_item.add(box);
-                menu_item.name = c.get_label ();
-                settings_menu.add(menu_item);
-            }
-
+            var beep_sound = new Gtk.CheckMenuItem.with_label (_("Beep sound"));
+            beep_sound.active = settings.get_boolean ("sound-beep");
+            beep_sound.toggled.connect (() => {
+                var state = settings.get_boolean ("sound-beep");
+                settings.set_boolean ("sound-beep",!state);
+                beep_sound.active = !state;
+            });
+            settings_menu.add (beep_sound);
             settings_menu.show_all();
 
             var settings_button = new Gtk.MenuButton();
@@ -135,6 +163,10 @@ namespace Timer {
         }
 
         private bool on_window_closing () {
+            int root_x, root_y;
+            get_position (out root_x, out root_y);
+            settings.set_int ("window-x", root_x);
+            settings.set_int ("window-y", root_y);
             return false;
         }
 }
