@@ -27,7 +27,7 @@
     <url type="homepage">https://github.com/parnold-x/timer</url>
     <url type="bugtracker">https://github.com/parnold-x/timer/issues</url>
     <custom>
-        <value key="x-appcenter-color-primary">rgb(230, 199, 168)</value>
-        <value key="x-appcenter-color-primary-text">rgb(0, 0, 0)</value>
+        <value key="x-appcenter-color-primary">rgb(234, 255, 198)</value>
+        <value key="x-appcenter-color-primary-text">rgb(23, 107, 0)</value>
     </custom>
 </component>
