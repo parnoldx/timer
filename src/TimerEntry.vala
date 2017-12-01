@@ -33,8 +33,8 @@ public class TimerEntry : Gtk.Entry {
     construct {
         get_style_context ().add_class ("entry-%d".printf(uid));
         try {
-            minute_only_pattern = new GLib.Regex ("""^\s*(?<minutes>\d+)\s*$""",RegexCompileFlags.JAVASCRIPT_COMPAT);
-            long_form_pattern = new GLib.Regex ("""^((?<days>\d+)\s*(d|dys?|days?))|((?<hours>\d+)\s*(h|hrs?|hours?))|((?<minutes>\d+)\s*(m|mins?|minutes?))|((?<seconds>\d+)\s*(s|secs?|seconds|))\s*$""",RegexCompileFlags.JAVASCRIPT_COMPAT);
+            minute_only_pattern = new GLib.Regex ("""^\s*(?<minutes>\d+)\s*$""", RegexCompileFlags.JAVASCRIPT_COMPAT);
+            long_form_pattern = new GLib.Regex ("""^\s*((?<days>\d+)\s*(d|dys?|days?))?\s*((?<hours>\d+)\s*(h|hrs?|hours?))?\s*((?<minutes>\d+)\s*(m|mins?|minutes?))?\s*((?<seconds>\d+)\s*(s|secs?|seconds|))?\s*$""", RegexCompileFlags.JAVASCRIPT_COMPAT);
         } catch (GLib.Error e) {
             GLib.error ("Regex construction: %s", e.message);
         }
@@ -99,35 +99,32 @@ public class TimerEntry : Gtk.Entry {
     private void timer_set (string timer_str) {
         try {
             GLib.MatchInfo mi;
-            if (minute_only_pattern.match (timer_str, 0, out mi)) {
-               var time = new Timer.TimeSpan ();
-               time.minutes = int.parse (mi.fetch_named ("minutes"));
-               manager.new_timer (time);
-               return;
+            if (minute_only_pattern.match_full (timer_str, -1, 0, 0, out mi)) {
+                var time = new Timer.TimeSpan ();
+                time.minutes = int.parse (mi.fetch_named ("minutes"));
+                manager.new_timer (time);
+                return;
             }
-            if (!long_form_pattern.match (timer_str, 0, out mi)) {
+            if (!long_form_pattern.match_full (timer_str, -1, 0, 0, out mi)) {
                 return;
             }
             var time = new Timer.TimeSpan ();
             var days = mi.fetch_named ("days");
+            var hours = mi.fetch_named ("hours");
+            var minutes = mi.fetch_named ("minutes");
+            var seconds = mi.fetch_named ("seconds");
+            if (days == null && hours == null && minutes == null && seconds == null) {
+                return;
+            }
             if (days != null) {
                 time.days = int.parse (days);
             }
-            var d_index = timer_str.index_of ("d");
-            long_form_pattern.match_full (timer_str, -1, d_index < 0 ? 0 : d_index, 0, out mi);
-            var hours = mi.fetch_named ("hours");
             if (hours != null) {
                 time.hours = int.parse (hours);
             }
-            var h_index = timer_str.index_of ("h");
-            long_form_pattern.match_full (timer_str, -1, h_index < 0 ? 0 : h_index, 0, out mi);
-            var minutes = mi.fetch_named ("minutes");
             if (minutes != null) {
                 time.minutes = int.parse (minutes);
             }
-            var m_index = timer_str.index_of ("m");
-            long_form_pattern.match_full (timer_str, -1, m_index < 0 ? 0 : m_index, 0, out mi);
-            var seconds = mi.fetch_named ("seconds");
             if (seconds != null) {
                 time.seconds = int.parse (seconds);
             }
@@ -140,12 +137,16 @@ public class TimerEntry : Gtk.Entry {
     public bool validate_timer (string timer_str) {
         try {
             GLib.MatchInfo mi;
-            if (minute_only_pattern.match (timer_str, 0, out mi)) {
+            if (minute_only_pattern.match_full (timer_str, -1, 0, 0, out mi)) {
                return true;
             }
-            return long_form_pattern.match (timer_str, 0, out mi);
+            if (!long_form_pattern.match_full (timer_str, -1, 0, 0, out mi)) {
+                return false;
+            }
+            return mi.fetch_named ("days") != null || mi.fetch_named ("hours") != null || mi.fetch_named ("minutes") != null || mi.fetch_named ("seconds") != null;
         } catch (GLib.Error e) {
             GLib.warning ("Regex parse error: %s", e.message);
+            return false;
         }
     }
 
