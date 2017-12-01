@@ -30,4 +30,11 @@
         <value key="x-appcenter-color-primary">rgb(234, 255, 198)</value>
         <value key="x-appcenter-color-primary-text">rgb(23, 107, 0)</value>
     </custom>
+    <releases>
+      <release version="0.2.0" date="2017-12-01">
+        <description>
+          <p>This release adds float parsing. So now you can also enter e.g. 3.5 for 3 minutes and 30 seconds</p>
+        </description>
+      </release>
+    <releases>
 </component>
