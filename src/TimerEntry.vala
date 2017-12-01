@@ -33,8 +33,8 @@ public class TimerEntry : Gtk.Entry {
     construct {
         get_style_context ().add_class ("entry-%d".printf(uid));
         try {
-            minute_only_pattern = new GLib.Regex ("""^\s*(?<minutes>\d+)\s*$""", RegexCompileFlags.JAVASCRIPT_COMPAT);
-            long_form_pattern = new GLib.Regex ("""^\s*((?<days>\d+)\s*(d|dys?|days?))?\s*((?<hours>\d+)\s*(h|hrs?|hours?))?\s*((?<minutes>\d+)\s*(m|mins?|minutes?))?\s*((?<seconds>\d+)\s*(s|secs?|seconds|))?\s*$""", RegexCompileFlags.JAVASCRIPT_COMPAT);
+            minute_only_pattern = new GLib.Regex ("""^\s*(?<minutes>\d*[.,]?\d+)\s*$""", RegexCompileFlags.JAVASCRIPT_COMPAT);
+            long_form_pattern = new GLib.Regex ("""^\s*((?<days>\d*[.,]?\d+)\s*(d|dys?|days?))?\s*((?<hours>\d*[.,]?\d+)\s*(h|hrs?|hours?))?\s*((?<minutes>\d*[.,]?\d+)\s*(m|mins?|minutes?))?\s*((?<seconds>\d*[.,]?\d+)\s*(s|secs?|seconds|))?\s*$""", RegexCompileFlags.JAVASCRIPT_COMPAT);
         } catch (GLib.Error e) {
             GLib.error ("Regex construction: %s", e.message);
         }
@@ -96,19 +96,21 @@ public class TimerEntry : Gtk.Entry {
         });
     }
 
+    private static double parse_num(string num) {
+      return double.parse (num.replace (",", "."));
+    }
+
     private void timer_set (string timer_str) {
         try {
             GLib.MatchInfo mi;
             if (minute_only_pattern.match_full (timer_str, -1, 0, 0, out mi)) {
-                var time = new Timer.TimeSpan ();
-                time.minutes = int.parse (mi.fetch_named ("minutes"));
-                manager.new_timer (time);
+                var time = parse_num (mi.fetch_named ("minutes")) * GLib.TimeSpan.MINUTE + 0.5;
+                manager.new_timer (new Timer.TimeSpan (time));
                 return;
             }
             if (!long_form_pattern.match_full (timer_str, -1, 0, 0, out mi)) {
                 return;
             }
-            var time = new Timer.TimeSpan ();
             var days = mi.fetch_named ("days");
             var hours = mi.fetch_named ("hours");
             var minutes = mi.fetch_named ("minutes");
@@ -116,19 +118,20 @@ public class TimerEntry : Gtk.Entry {
             if (days == null && hours == null && minutes == null && seconds == null) {
                 return;
             }
+            var time = 0.5;  // Rounding
             if (days != null) {
-                time.days = int.parse (days);
+                time += parse_num (days) * GLib.TimeSpan.DAY;
             }
             if (hours != null) {
-                time.hours = int.parse (hours);
+                time += parse_num (hours) * GLib.TimeSpan.HOUR;
             }
             if (minutes != null) {
-                time.minutes = int.parse (minutes);
+                time += parse_num (minutes) * GLib.TimeSpan.MINUTE;
             }
             if (seconds != null) {
-                time.seconds = int.parse (seconds);
+                time += parse_num (seconds) * GLib.TimeSpan.SECOND;
             }
-            manager.new_timer (time);
+            manager.new_timer (new Timer.TimeSpan (time));
         } catch (GLib.Error e) {
             GLib.warning ("Regex parse error: %s", e.message);
         }

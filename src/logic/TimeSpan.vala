@@ -18,8 +18,8 @@
  */
 
 namespace Timer {
-public class TimeSpan : GLib.Object {
-  		public int days { get; set; }
+    public class TimeSpan : GLib.Object {
+        public int days { get; set; }
 
         public int hours { get; set; }
 
@@ -29,7 +29,14 @@ public class TimeSpan : GLib.Object {
 
         bool expired = false;
 
-        public TimeSpan () {
+        public TimeSpan (double time_in_ms = 0.0) {
+          days = (int) (time_in_ms / GLib.TimeSpan.DAY);
+          time_in_ms -= days * GLib.TimeSpan.DAY;
+          hours = (int) (time_in_ms / GLib.TimeSpan.HOUR);
+          time_in_ms -= hours * GLib.TimeSpan.HOUR;
+          minutes = (int) (time_in_ms / GLib.TimeSpan.MINUTE);
+          time_in_ms -= minutes * GLib.TimeSpan.MINUTE;
+          seconds = (int) (time_in_ms / GLib.TimeSpan.SECOND);
         }
 
         public TimeSpan.from_glib (GLib.TimeSpan glib_time_span) {
@@ -54,12 +61,12 @@ public class TimeSpan : GLib.Object {
         }
 
         public DateTime get_end_time (DateTime start_time) {
-        	DateTime end_time = start_time;
-        	end_time = end_time.add_seconds (seconds);
-        	end_time = end_time.add_minutes (minutes);
-        	end_time = end_time.add_hours (hours);
-        	end_time = end_time.add_days (days);
-        	return end_time;
+            DateTime end_time = start_time;
+            end_time = end_time.add_seconds (seconds);
+            end_time = end_time.add_minutes (minutes);
+            end_time = end_time.add_hours (hours);
+            end_time = end_time.add_days (days);
+            return end_time;
         }
 
         public bool match () {
@@ -71,23 +78,23 @@ public class TimeSpan : GLib.Object {
         }
 
         public string to_string () {
-        	string time = "";
-        	if (days != 0) {
-        		time+="%d days ".printf(days);
-        	}
-        	if (hours != 0) {
-        		time+="%d hours ".printf(hours);
-        	}
-        	if (minutes != 0) {
-        		time+="%d minutes ".printf(minutes);
-        	}
-        	if (seconds != 0) {
-        		time+="%d seconds ".printf(seconds);
-        	}
+            string time = "";
+            if (days != 0) {
+                time+="%d days ".printf(days);
+            }
+            if (hours != 0) {
+                time+="%d hours ".printf(hours);
+            }
+            if (minutes != 0) {
+                time+="%d minutes ".printf(minutes);
+            }
+            if (seconds != 0) {
+                time+="%d seconds ".printf(seconds);
+            }
             if (expired && time.length > 0) {
                 time+="ago";
             }
-        	return time;
+            return time;
         }
-}
+    }
 }
