@@ -36,5 +36,5 @@
           <p>This release adds float parsing. So now you can also enter e.g. 3.5 for 3 minutes and 30 seconds</p>
         </description>
       </release>
-    <releases>
+    </releases>
 </component>
