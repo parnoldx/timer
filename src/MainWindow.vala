@@ -25,6 +25,7 @@ namespace Timer {
         public int uid { get; construct set; }
         public string? timer_name { get; construct set; }
         public string timer { get; construct set; }
+        TimerManager timer_manager;
 
 		public MainWindow (Gtk.Application application, int window_id, string? name, string? t_set) {
 			Object (application: application,
@@ -63,7 +64,7 @@ namespace Timer {
 
             this.delete_event.connect (on_window_closing);
 
-            var timer_manager = new TimerManager ();
+            timer_manager = new TimerManager ();
             var time_entry = new TimerEntry (timer_manager, uid);
 
             var box = new Gtk.Box(Gtk.Orientation.VERTICAL, 0);
@@ -163,6 +164,7 @@ namespace Timer {
         }
 
         private bool on_window_closing () {
+            timer_manager.actual_timer.stop ();
             int root_x, root_y;
             get_position (out root_x, out root_y);
             settings.set_int ("window-x", root_x);
