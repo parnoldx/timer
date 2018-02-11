@@ -98,7 +98,7 @@ namespace Timer {
                 time+="%d minutes ".printf(minutes);
             }
             if (seconds == 1) {
-                time+="%d second".printf(seconds);
+                time+="%d second ".printf(seconds);
             }
             if (seconds != 1 && seconds != 0) {
                 time+="%d seconds ".printf(seconds);
