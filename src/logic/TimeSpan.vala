@@ -85,7 +85,10 @@ namespace Timer {
             if (hours != 0) {
                 time+="%d hours ".printf(hours);
             }
-            if (minutes != 0) {
+            if (minutes == 1) {
+                time+="%d minute ".printf(minutes);
+            }
+            if (minutes != 0 && minutes != 1) {
                 time+="%d minutes ".printf(minutes);
             }
             if (seconds != 0) {
