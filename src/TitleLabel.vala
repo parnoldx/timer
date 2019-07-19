@@ -30,7 +30,6 @@ public class TitleLabel : Gtk.Entry {
 
 	construct {
 		var title_context = get_style_context ();
-		title_context.remove_class ("entry");
         title_context.add_class ("label");
         title_context.add_class ("title");
         activate.connect (() => {
