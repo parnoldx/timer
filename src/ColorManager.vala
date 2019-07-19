@@ -134,10 +134,18 @@ public class ColorManager : GLib.Object {
 		.w-%d {
 		    background-color: @colorPrimary%d;
 		}
-		.w-%d GtkHeaderBar {
+		.w-%d .titlebar {
 		    background-color: @colorPrimary%d;
 		    padding: 1px 3px;
 			box-shadow: none;
+		}
+		.w-%d .titlebar entry {
+			background: none;
+			border: none;
+			box-shadow: none;
+		}
+		.w-%d .titlebar entry:focus {
+			border-bottom: 1px solid @base_color;
 		}
 		.entry-%d {
 		    font-size: 18px;
@@ -150,8 +158,8 @@ public class ColorManager : GLib.Object {
         0 1px 0 0 alpha (@bg_highlight_color, 0.3);
     transition: all 200ms ease-in;
 }
-entry-%d progress,
-entry-%d progress:focus,
+.entry-%d progress,
+.entry-%d progress:focus,
 .entry-%d.progressbar,
 .entry-%d.progressbar:focus {
     background-image:
@@ -193,7 +201,8 @@ entry-%d progress:focus,
 		@define-color colorAccent%d %s;
 
         .w-%d,
-		.w-%d GtkHeaderBar {
+		.w-%d .titlebar,
+		.entry-%d progress {
             transition: all 600ms ease-in-out;
         }
     	""";
@@ -218,7 +227,7 @@ entry-%d progress:focus,
 			try {
             	var provider = new Gtk.CssProvider ();
             	provider.load_from_data (ColorManager.STARTUP_CSS.printf (uid, color.get_primary_color (),
-            		uid, color.get_secondary_color (), uid, uid, uid, uid, uid, uid, uid, uid, uid, uid,
+            		uid, color.get_secondary_color (), uid, uid, uid, uid, uid, uid, uid, uid, uid, uid, uid, uid,
             		uid, uid, uid, uid, uid, uid, uid, uid, uid));
             	Gtk.StyleContext.add_provider_for_screen (Gdk.Screen.get_default (), provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
              } catch (GLib.Error e) {
@@ -229,7 +238,7 @@ entry-%d progress:focus,
 		public static void change_color (Timer.Color color, int uid) {
 			try {
             	var provider = new Gtk.CssProvider ();
-            	provider.load_from_data (ColorManager.CHANGE_COLOR.printf (uid, color.get_primary_color (), uid, color.get_secondary_color (), uid, uid));
+            	provider.load_from_data (ColorManager.CHANGE_COLOR.printf (uid, color.get_primary_color (), uid, color.get_secondary_color (), uid, uid, uid));
             	Gtk.StyleContext.add_provider_for_screen (Gdk.Screen.get_default (), provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
             } catch (GLib.Error e) {
             	GLib.error ("Failed to load css: %s", e.message);
