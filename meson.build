@@ -1,5 +1,5 @@
 project('com.github.parnold-x.timer', ['vala', 'c'],
-    version: '0.2.0'
+    version: '0.3.0'
 )
 
 gnome = import('gnome')
