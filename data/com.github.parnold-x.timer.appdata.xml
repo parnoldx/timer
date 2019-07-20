@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Copyright 2017 Peter Arnold <parnold1@gmail.com> -->
 <component type="desktop-application">
-    <id>com.github.parnold-x.timer.desktop</id>
+    <id>com.github.parnold-x.timer</id>
     <metadata_license>CC0-1.0</metadata_license>
     <project_license>GPL-3.0+</project_license>
     <name>Timer</name>
