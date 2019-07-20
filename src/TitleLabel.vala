@@ -19,7 +19,7 @@
 
 namespace Timer {
 public class TitleLabel : Gtk.Entry {
-	string last_title;
+	public string last_title { get; private set; }
 
 	public signal void unfocus ();
 	public TitleLabel (string? timer_name) {

@@ -20,12 +20,12 @@
 namespace Timer {
 
     public class MainWindow : Gtk.Window {
-        private const string FINISHED_SUFFIX = " finished";
     	private Settings settings;
         public int uid { get; construct set; }
         public string? timer_name { get; construct set; }
         public string timer { get; construct set; }
         TimerManager timer_manager;
+        private bool is_finished;
 
 		public MainWindow (Gtk.Application application, int window_id, string? name, string? t_set) {
 			Object (application: application,
@@ -88,8 +88,9 @@ namespace Timer {
 
             timer_manager.new_timer_set.connect ((t) => {
                 focus (Gtk.DirectionType.UP);
-                if (title.text.has_suffix (FINISHED_SUFFIX)) {
-                    title.text = title.text.replace (FINISHED_SUFFIX, "");
+                if (is_finished) {
+                    title.text = title.last_title;
+                    is_finished = false;
                 }
                 t.start ();
                 if (uid == 0)
@@ -104,8 +105,9 @@ namespace Timer {
             });
             timer_manager.timer_finished.connect ((t) => {
                 time_entry.set_progress_fraction (t.time_elapsed_percentage);
-                if (!title.text.has_suffix (FINISHED_SUFFIX)) {
-                    title.text = title.text + FINISHED_SUFFIX;
+                if (!is_finished) {
+                    title.text = _("%s finished").printf (title.text);
+                    is_finished = true;
                 }
                 if (!timer_manager.stop_notify)
                     time_entry.text = title.text;
