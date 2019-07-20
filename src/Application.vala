@@ -19,7 +19,7 @@
 
 namespace Timer {
     public class TimerApp : Gtk.Application {
-        public const string STANDARD_TIMER_NAME = "Timer";
+        public const string STANDARD_TIMER_NAME = _("Timer");
 
         private static string? title = null;
 

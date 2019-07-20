@@ -80,31 +80,31 @@ namespace Timer {
         public string to_string () {
             string time = "";
             if (days == 1) {
-                time+="%d day ".printf(days);
+                time += _("%d day ").printf (days);
             }
             if (days != 1 && days != 0) {
-                time+="%d days ".printf(days);
+                time += _("%d days ").printf (days);
             }
             if (hours == 1) {
-                time+="%d hour ".printf(hours);
+                time += _("%d hour ").printf (hours);
             }
             if (hours != 1 && hours != 0) {
-                time+="%d hours ".printf(hours);
+                time += _("%d hours ").printf (hours);
             }
             if (minutes == 1) {
-                time+="%d minute ".printf(minutes);
+                time += _("%d minute ").printf (minutes);
             }
             if (minutes != 0 && minutes != 1) {
-                time+="%d minutes ".printf(minutes);
+                time += _("%d minutes ").printf (minutes);
             }
             if (seconds == 1) {
-                time+="%d second ".printf(seconds);
+                time += _("%d second ").printf (seconds);
             }
             if (seconds != 1 && seconds != 0) {
-                time+="%d seconds ".printf(seconds);
+                time += _("%d seconds ").printf (seconds);
             }
             if (expired && time.length > 0) {
-                time+="ago";
+                time += _("ago");
             }
             return time;
         }
