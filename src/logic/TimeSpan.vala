@@ -79,32 +79,24 @@ namespace Timer {
 
         public string to_string () {
             string time = "";
-            if (days == 1) {
-                time+="%d day ".printf(days);
+            if (days != 0) {
+                time += ngettext ("%d day", "%d days", days).printf (days);
+                time += " ";
             }
-            if (days != 1 && days != 0) {
-                time+="%d days ".printf(days);
+            if (hours != 0) {
+                time += ngettext ("%d hour", "%d hours", hours).printf (hours);
+                time += " ";
             }
-            if (hours == 1) {
-                time+="%d hour ".printf(hours);
+            if (minutes != 0) {
+                time += ngettext ("%d minute", "%d minutes", minutes).printf (minutes);
+                time += " ";
             }
-            if (hours != 1 && hours != 0) {
-                time+="%d hours ".printf(hours);
-            }
-            if (minutes == 1) {
-                time+="%d minute ".printf(minutes);
-            }
-            if (minutes != 0 && minutes != 1) {
-                time+="%d minutes ".printf(minutes);
-            }
-            if (seconds == 1) {
-                time+="%d second ".printf(seconds);
-            }
-            if (seconds != 1 && seconds != 0) {
-                time+="%d seconds ".printf(seconds);
+            if (seconds != 0) {
+                time += ngettext ("%d second", "%d seconds", seconds).printf (seconds);
+                time += " ";
             }
             if (expired && time.length > 0) {
-                time+="ago";
+                time += _("ago");
             }
             return time;
         }

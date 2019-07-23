@@ -1,0 +1,73 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the extra package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: extra\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-07-20 12:25+0900\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: data/com.github.parnold-x.timer.appdata.xml.in:7
+#: data/com.github.parnold-x.timer.desktop.in:4
+#: data/com.github.parnold-x.timer.desktop.in:6
+msgid "Timer"
+msgstr ""
+
+#: data/com.github.parnold-x.timer.appdata.xml.in:8
+#: data/com.github.parnold-x.timer.desktop.in:5
+msgid "The ultimate tea timer"
+msgstr ""
+
+#: data/com.github.parnold-x.timer.appdata.xml.in:10
+msgid "The ultimate tea timer you searched for."
+msgstr ""
+
+#: data/com.github.parnold-x.timer.appdata.xml.in:12
+msgid ""
+"Start a timer with natural language input like e.g. 5 minutes 15 seconds or "
+"5m3s or just 5 for 5 minutes"
+msgstr ""
+
+#: data/com.github.parnold-x.timer.appdata.xml.in:13
+msgid "You can assign a title to your timer by double clicking"
+msgstr ""
+
+#: data/com.github.parnold-x.timer.appdata.xml.in:14
+msgid "Various color options to choose from"
+msgstr ""
+
+#: data/com.github.parnold-x.timer.appdata.xml.in:15
+msgid "Command line options available, see --help for more information"
+msgstr ""
+
+#: data/com.github.parnold-x.timer.appdata.xml.in:26
+msgid "Peter Arnold"
+msgstr ""
+
+#: data/com.github.parnold-x.timer.appdata.xml.in:36
+msgid "Release for Juno"
+msgstr ""
+
+#: data/com.github.parnold-x.timer.appdata.xml.in:41
+msgid ""
+"This release adds float parsing. So now you can also enter e.g. 3.5 for 3 "
+"minutes and 30 seconds"
+msgstr ""
+
+#: data/com.github.parnold-x.timer.desktop.in:9
+msgid "com.github.parnold-x.timer"
+msgstr ""
+
+#: data/com.github.parnold-x.timer.desktop.in:12
+msgid "Timer;TeaTimer;Countdown;Alarm;"
+msgstr ""
