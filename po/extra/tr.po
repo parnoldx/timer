@@ -1,0 +1,89 @@
+# Turkish translation for Timer
+# Copyright (C) 2019 Timer'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the Timer package.
+# Timer: com.github.parnold-x.timer
+#
+# Sabri Ünal <libreajans@gmail.com>, 2019.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: com.github.parnold-x.timer extra\n"
+"Report-Msgid-Bugs-To: https://github.com/parnold-x/timer/\n"
+"POT-Creation-Date: 2019-10-15 03:28+0300\n"
+"PO-Revision-Date: 2019-10-15 03:41+0300\n"
+"Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
+"Language-Team: Türkçe <gnome-turk@gnome.org>\n"
+"Language: tr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Poedit 2.0.6\n"
+"Project-Id-Version: \n"
+"PO-Revision-Date: \n"
+
+#: data/com.github.parnold-x.timer.appdata.xml.in:7
+#: data/com.github.parnold-x.timer.desktop.in:4
+#: data/com.github.parnold-x.timer.desktop.in:6
+msgid "Timer"
+msgstr "Zamanlayıcı"
+
+# Serbest çeviri yapıldı
+#: data/com.github.parnold-x.timer.appdata.xml.in:8
+#: data/com.github.parnold-x.timer.desktop.in:5
+msgid "The ultimate tea timer"
+msgstr "Muhteşem çay zamanlayıcı"
+
+# Serbest çeviri yapıldı
+#: data/com.github.parnold-x.timer.appdata.xml.in:10
+msgid "The ultimate tea timer you searched for."
+msgstr "Arayıpta bulamadığınız muhteşem çay zamanlayıcı."
+
+#: data/com.github.parnold-x.timer.appdata.xml.in:12
+msgid ""
+"Start a timer with natural language input like e.g. 5 minutes 15 seconds or "
+"5m3s or just 5 for 5 minutes"
+msgstr ""
+"Doğal dil girişi ile bir zamanlayıcı başlatabilirsiniz. Örneğin 5 dakika 15 "
+"saniye veya 5dk3sn veya 5 dakika için sadece 5 yazabilirsiniz"
+
+#: data/com.github.parnold-x.timer.appdata.xml.in:13
+msgid "You can assign a title to your timer by double clicking"
+msgstr "Zamanlayıcınıza çift tıklatarak bir başlık atayabilirsiniz"
+
+#: data/com.github.parnold-x.timer.appdata.xml.in:14
+msgid "Various color options to choose from"
+msgstr "Aralarından seçim yapabileceğiniz çeşitli renk seçenekleri eklendi"
+
+#: data/com.github.parnold-x.timer.appdata.xml.in:15
+msgid "Command line options available, see --help for more information"
+msgstr ""
+"Komut satırı seçenekleri artık kullanılabilir. Detaylar için --help "
+"komutunu kullanabilirsiniz"
+
+# Geliştirici adı, çevirmeyin
+#: data/com.github.parnold-x.timer.appdata.xml.in:26
+msgid "Peter Arnold"
+msgstr "Peter Arnold"
+
+#: data/com.github.parnold-x.timer.appdata.xml.in:36
+msgid "Release for Juno"
+msgstr "Juno için yayınlandı"
+
+# Serbest çeviri yapıldı
+#: data/com.github.parnold-x.timer.appdata.xml.in:41
+msgid ""
+"This release adds float parsing. So now you can also enter e.g. 3.5 for 3 "
+"minutes and 30 seconds"
+msgstr ""
+"Bu sürüm kayan nokta ayrıştırması ekler. Yani artık 3.5 dakika veya 3 "
+"dakika 30 saniye gibi değerler ekleyebilirsiniz"
+
+# Uygulama kimliği, çevirmeyin
+#: data/com.github.parnold-x.timer.desktop.in:9
+msgid "com.github.parnold-x.timer"
+msgstr "com.github.parnold-x.timer"
+
+#: data/com.github.parnold-x.timer.desktop.in:12
+msgid "Timer;TeaTimer;Countdown;Alarm;"
+msgstr "Zamanlayıcı;Çay Zamanlayıcı;Kronometre;Alarm;"
