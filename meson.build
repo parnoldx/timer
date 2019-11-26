@@ -1,6 +1,4 @@
-project('com.github.parnold-x.timer', ['vala', 'c'],
-    version: '0.3.0'
-)
+project('com.github.parnold-x.timer', 'vala', 'c', version: '0.3.0')
 
 gnome = import('gnome')
 i18n = import('i18n')
@@ -11,46 +9,18 @@ add_project_arguments(
 )
 
 asresources = gnome.compile_resources(
-    'as-resources', 'data/res.gresource.xml',
+    'as-resources',
+    join_paths('data', meson.project_name()) + '.gresource.xml',
     source_dir: 'data',
     c_name: 'as'
 )
 
-conf = configuration_data()
-# Get the package data directory under Meson
-pkgdatadir = join_paths([ get_option('prefix'),
-                          get_option('datadir'),
-                          meson.project_name() ])
-
-conf.set_quoted('PKGDATADIR', pkgdatadir)
-
-# Other configs
-conf.set_quoted('GETTEXT_PACKAGE', meson.project_name())
-add_global_arguments('-DDATADIR="' + get_option('datadir') + '"', language: 'c')
-configure_file(output: 'config.h', configuration: conf)
-config_h_dir = include_directories('.')
-cc = meson.get_compiler('c')
-
-# Arguments for C
-c_args = [
-  '-include', 'config.h',
-  '-w',
-]
-
+subdir('src')
 
 executable(
-    'com.github.parnold-x.timer',
-    'src/Application.vala',
-    'src/ColorChooser.vala',
-    'src/ColorManager.vala',
-    'src/MainWindow.vala',
-    'src/TimerEntry.vala',
-    'src/TitleLabel.vala',
-    'src/logic/TimeSpan.vala',
-    'src/logic/TimerManager.vala',
-    'src/logic/TimerObject.vala',
+    meson.project_name(),
+    sources,
     asresources,
-    c_args: c_args,
     dependencies: [
         dependency('glib-2.0'),
         dependency('gio-2.0'),
@@ -59,13 +29,12 @@ executable(
         dependency('gtk+-3.0'),
         dependency('gstreamer-audio-1.0'),
         dependency('unity'),
-        # math dependency so glib math shit works
-        cc.find_library('m', required: false)
+        meson.get_compiler('c').find_library('m', required: false)
     ],
     install : true
 )
 
-meson.add_install_script('meson/post_install.py')
-
 subdir('data')
 subdir('po')
+
+meson.add_install_script('meson/post_install.py')
