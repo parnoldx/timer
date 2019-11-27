@@ -7,10 +7,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: com.github.parnold-x.timer extra\n"
-"Report-Msgid-Bugs-To: https://github.com/parnold-x/timer/\n"
-"POT-Creation-Date: 2019-10-15 03:28+0300\n"
-"PO-Revision-Date: 2019-10-15 03:41+0300\n"
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-11-27 08:01+0100\n"
+"PO-Revision-Date: \n"
 "Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
 "Language-Team: Türkçe <gnome-turk@gnome.org>\n"
 "Language: tr\n"
@@ -19,8 +19,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: Poedit 2.0.6\n"
-"Project-Id-Version: \n"
-"PO-Revision-Date: \n"
 
 #: data/com.github.parnold-x.timer.appdata.xml.in:7
 #: data/com.github.parnold-x.timer.desktop.in:4
@@ -58,8 +56,8 @@ msgstr "Aralarından seçim yapabileceğiniz çeşitli renk seçenekleri eklendi
 #: data/com.github.parnold-x.timer.appdata.xml.in:15
 msgid "Command line options available, see --help for more information"
 msgstr ""
-"Komut satırı seçenekleri artık kullanılabilir. Detaylar için --help "
-"komutunu kullanabilirsiniz"
+"Komut satırı seçenekleri artık kullanılabilir. Detaylar için --help komutunu "
+"kullanabilirsiniz"
 
 # Geliştirici adı, çevirmeyin
 #: data/com.github.parnold-x.timer.appdata.xml.in:26
@@ -76,8 +74,8 @@ msgid ""
 "This release adds float parsing. So now you can also enter e.g. 3.5 for 3 "
 "minutes and 30 seconds"
 msgstr ""
-"Bu sürüm kayan nokta ayrıştırması ekler. Yani artık 3.5 dakika veya 3 "
-"dakika 30 saniye gibi değerler ekleyebilirsiniz"
+"Bu sürüm kayan nokta ayrıştırması ekler. Yani artık 3.5 dakika veya 3 dakika "
+"30 saniye gibi değerler ekleyebilirsiniz"
 
 # Uygulama kimliği, çevirmeyin
 #: data/com.github.parnold-x.timer.desktop.in:9

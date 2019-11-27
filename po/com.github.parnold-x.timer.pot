@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.parnold-x.timer\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-07-20 12:25+0900\n"
+"POT-Creation-Date: 2019-11-27 08:01+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,35 +18,35 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-#: src/logic/TimeSpan.vala:83
+#: src/Logic/TimeSpan.vala:83
 #, c-format
 msgid "%d day"
 msgid_plural "%d days"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/logic/TimeSpan.vala:87
+#: src/Logic/TimeSpan.vala:87
 #, c-format
 msgid "%d hour"
 msgid_plural "%d hours"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/logic/TimeSpan.vala:91
+#: src/Logic/TimeSpan.vala:91
 #, c-format
 msgid "%d minute"
 msgid_plural "%d minutes"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/logic/TimeSpan.vala:95
+#: src/Logic/TimeSpan.vala:95
 #, c-format
 msgid "%d second"
 msgid_plural "%d seconds"
 msgstr[0] ""
 msgstr[1] ""
 
-#: src/logic/TimeSpan.vala:99
+#: src/Logic/TimeSpan.vala:99
 msgid "ago"
 msgstr ""
 
