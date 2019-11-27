@@ -1,4 +1,4 @@
-project('com.github.parnold-x.timer', 'vala', 'c', version: '0.3.0')
+project('com.github.parnold-x.timer', 'vala', 'c', version: '0.3.1')
 
 gnome = import('gnome')
 i18n = import('i18n')
