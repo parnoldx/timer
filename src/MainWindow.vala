@@ -79,6 +79,9 @@ namespace Timer {
             show_all ();
             time_entry.focus (Gtk.DirectionType.UP);
             // set_keep_above (settings.get_boolean ("always-on-top"));
+            time_entry.unfocus.connect (() => {
+                focus (Gtk.DirectionType.UP);
+            });
 
             title.unfocus.connect (() => {
                 time_entry.focus (Gtk.DirectionType.UP);

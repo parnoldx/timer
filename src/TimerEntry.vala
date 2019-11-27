@@ -23,6 +23,7 @@ public class TimerEntry : Gtk.Entry {
     GLib.Regex long_form_pattern;
     TimerManager manager;
     public int uid { get; construct set; }
+    public signal void unfocus ();
 
     public TimerEntry (TimerManager manager, int window_id) {
         Object (xalign: 0.5f,
@@ -74,6 +75,14 @@ public class TimerEntry : Gtk.Entry {
                     ColorManager.change_font (12, uid);
                 }
             }
+        });
+        key_press_event.connect ((e) => {
+            if (65307 == e.keyval) {
+                unfocus ();
+                manager.stop_notify = false;
+            }
+
+            return false;
         });
         focus_in_event.connect ((e) => {
             if (manager.is_timer_set ()) {
