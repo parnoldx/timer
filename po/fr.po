@@ -1,72 +1,71 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# French translations for com.github.parnold-x.timer package.
+# Copyright (C) 2019 THE com.github.parnold-x.timer'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the com.github.parnold-x.timer package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# Nathan Bonnemains (@NathanBnm), 2019.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: com.github.parnold-x.timer\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-11-27 08:01+0100\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"POT-Creation-Date: 2019-11-27 08:02+0100\n"
+"PO-Revision-Date: 2019-11-27 08:02+0100\n"
+"Last-Translator: Nathan Bonnemains (@NathanBnm)\n"
+"Language-Team: none\n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #: src/Logic/TimeSpan.vala:83
 #, c-format
 msgid "%d day"
 msgid_plural "%d days"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d jour"
+msgstr[1] "%d jours"
 
 #: src/Logic/TimeSpan.vala:87
 #, c-format
 msgid "%d hour"
 msgid_plural "%d hours"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d heure"
+msgstr[1] "%d heures"
 
 #: src/Logic/TimeSpan.vala:91
 #, c-format
 msgid "%d minute"
 msgid_plural "%d minutes"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d minute"
+msgstr[1] "%d minutes"
 
 #: src/Logic/TimeSpan.vala:95
 #, c-format
 msgid "%d second"
 msgid_plural "%d seconds"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d seconde"
+msgstr[1] "%d secondes"
 
 #: src/Logic/TimeSpan.vala:99
 msgid "ago"
-msgstr ""
+msgstr "plus tôt"
 
 #: src/Application.vala:22 src/MainWindow.vala:33
 msgid "Timer"
-msgstr ""
+msgstr "Minuteur"
 
 #: src/MainWindow.vala:109
 #, c-format
 msgid "%s finished"
-msgstr ""
+msgstr "%s terminé"
 
 #: src/MainWindow.vala:129
 msgid "New Timer"
-msgstr ""
+msgstr "Nouveau minuteur"
 
 #: src/MainWindow.vala:141
 msgid "Always on top"
-msgstr ""
+msgstr "Toujours au premier plan"
 
 #: src/MainWindow.vala:151
 msgid "Beep sound"
-msgstr ""
+msgstr "Bip sonore"
