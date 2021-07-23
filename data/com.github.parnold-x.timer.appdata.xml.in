@@ -29,6 +29,7 @@
     <custom>
         <value key="x-appcenter-color-primary">rgb(234, 255, 198)</value>
         <value key="x-appcenter-color-primary-text">rgb(23, 107, 0)</value>
+        <value key="x-appcenter-stripe">pk_live_RErH63v8TNvv1Z37UIiGJw8y</value>
     </custom>
     <releases>
       <release version="0.3.1" date="2019-11-27">
